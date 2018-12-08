@@ -1,5 +1,5 @@
 # About
-Utilizing DN.H Source Query API, displays servers map, player count &amp; ip what refreshes at a set interval.
+Utilizing DN.H Source Query API. displays map, player count &amp; ip what refreshes at a set interval.
 
 # Prerequisites
 - discord
