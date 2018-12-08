@@ -6,4 +6,4 @@ Utilizing DN.H Source Query API. displays map, player count &amp; ip what refres
 - json
 
 # Preview
-![Bot Preview](https://i.gyazo.com/4922fd86cecf2dea93136c2c76ec47b9.png)
+![Bot Preview](https://i.gyazo.com/527b7dd13d9dd32f017211ea3d4f4972.png)
