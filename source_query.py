@@ -14,7 +14,7 @@ server_channel = '465887902920867841' # Channel ID for servers to be posted in.
 embed_color = 0xE8CA11   # Do not remove 0x  || Message Color. Hex, 6 characters. Do NOT include # | Helpful link https://htmlcolorcodes.com/color-picker/
 update_time  = 120 # How many seconds should it take to update.
 
-ips = ["ip:port", "ip:port"] 
+ips = ["ip:port", "ip:port"] # The amount of servers are limited due to discord's message character limit.
 ###################################################################################################################################################################
 
 bot = commands.Bot(command_prefix=set_prefix)
