@@ -19,19 +19,16 @@ ips = ["ip:port", "ip:port"]
 
 bot = commands.Bot(command_prefix=set_prefix)
 
-first_load = 1
-
 @bot.event
 async def on_ready():
     print("Bot connected!\nCurrently linked to {}".format(bot.user.name))
 
 async def background_loop():
-    global first_load
-
     await bot.wait_until_ready()
+    first_load = 1
     while not bot.is_closed:
         loaded = 0
-
+        
         server_details = ''
         for ip in ips:
             async with aiohttp.get('https://districtnine.host/api/serverquery/?ip={}'.format(ip)) as r:
