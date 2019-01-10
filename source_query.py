@@ -4,7 +4,6 @@ from discord.utils import get
 from discord.ext.commands import Bot
 import asyncio
 import aiohttp
-import json
 
 ###################################################################################################################################################################
 #Config
