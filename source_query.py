@@ -6,7 +6,7 @@ import asyncio
 import aiohttp
 
 ###################################################################################################################################################################
-#Config
+# Config
 bot_token = "" # Discord bot token. Find at https://discordapp.com/developers/applications/me
 set_prefix = '!' # Sets command prefix.
 server_channel = '' # Channel ID for servers to be posted in.
@@ -41,7 +41,7 @@ async def background_loop():
                     first_load = 0
                     msg = await bot.send_message(bot.get_channel(server_channel), embed=embed)
                 else:
-                    await bot.edit_message(msg, embed=embed)
+                    msg = await bot.edit_message(msg, embed=embed)
 
         await asyncio.sleep(update_time)
 
