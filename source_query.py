@@ -34,7 +34,7 @@ async def background_loop():
                     if query["error"] != "server-down":
                         server_details += "\n\n**Name:** {} \n**Map**: {}\n**Players:** {}\{} \nsteam://connect/{}".format(query["name"], query["map"], query["players"], query["maxplayers"], query["ip"])
                     else:
-                        server_details += "\n\n **IP:** {} \n**Status:** Offline".format(query["ip"])
+                        server_details += "\n\n**IP:** {} \n**Status:** Offline".format(query["ip"])
                 embed = discord.Embed(colour=discord.Colour(embed_color))
                 embed.add_field(name="SERVERS", value=server_details, inline=False)
                 if first_load == 1:
