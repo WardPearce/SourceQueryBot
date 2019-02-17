@@ -31,7 +31,7 @@ async def background_loop():
             if r.status == 200:
                 data = await r.json()
                 for query in data:
-                    if query["error"] != "server-down":
+                    if query["error"] == "none":
                         server_details += "\n\n**Name:** {} \n**Map**: {}\n**Players:** {}\{} \nsteam://connect/{}".format(query["name"], query["map"], query["players"], query["maxplayers"], query["ip"])
                     else:
                         server_details += "\n\n**IP:** {} \n**Status:** Offline".format(query["ip"])
