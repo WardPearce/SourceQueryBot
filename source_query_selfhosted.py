@@ -27,7 +27,7 @@ async def background_loop():
     first_load = 1
     while not bot.is_closed:
         server_details = ''
-        async with aiohttp.get('https://districtnine.host/api/serverquery/?ip={}'.format(ips)) as r:
+        async with aiohttp.get('http://districtnine.host/api/serverquery/?ip={}'.format(ips)) as r:
             if r.status == 200:
                 data = await r.json()
                 for query in data:
@@ -41,7 +41,7 @@ async def background_loop():
                     first_load = 0
                     msg = await bot.send_message(bot.get_channel(server_channel), embed=embed)
                 else:
-                    msg = await bot.edit_message(msg, embed=embed)
+                    await bot.edit_message(msg, embed=embed)
 
         await asyncio.sleep(update_time)
 
