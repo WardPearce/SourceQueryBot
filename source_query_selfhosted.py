@@ -26,25 +26,28 @@ async def background_loop():
     await bot.wait_until_ready()
     first_load = 1
     while not bot.is_closed:
-        server_details = ''
-        async with aiohttp.get('http://districtnine.host/api/serverquery/?ip={}'.format(ips)) as r:
-            if r.status == 200:
-                data = await r.json()
-                for query in data:
-                    if query["error"] == "none":
-                        server_details += "\n\n**Name:** {} \n**Map**: {}\n**Players:** {}\{} \nsteam://connect/{}".format(query["name"], query["map"], query["players"], query["maxplayers"], query["ip"])
+        try:
+            server_details = ''
+            async with aiohttp.get('http://districtnine.host/api/serverquery/?ip={}'.format(ips)) as r:
+                if r.status == 200:
+                    data = await r.json()
+                    for query in data:
+                        if query["error"] == "none":
+                            server_details += "\n\n**Name:** {} \n**Map**: {}\n**Players:** {}\{} \nsteam://connect/{}".format(query["name"], query["map"], query["players"], query["maxplayers"], query["ip"])
+                        else:
+                            server_details += "\n\n**IP:** {} \n**Status:** Offline".format(query["ip"])
+                    embed = discord.Embed(colour=discord.Colour(embed_color))
+                    embed.add_field(name="SERVERS", value=server_details, inline=False)
+                    if first_load == 1:
+                        first_load = 0
+                        msg = await bot.send_message(bot.get_channel(server_channel), embed=embed)
                     else:
-                        server_details += "\n\n**IP:** {} \n**Status:** Offline".format(query["ip"])
-                embed = discord.Embed(colour=discord.Colour(embed_color))
-                embed.add_field(name="SERVERS", value=server_details, inline=False)
-                if first_load == 1:
-                    first_load = 0
-                    msg = await bot.send_message(bot.get_channel(server_channel), embed=embed)
-                else:
-                    await bot.edit_message(msg, embed=embed)
+                        await bot.edit_message(msg, embed=embed)
+        except:
+            if first_load == 0:
+                first_load = 1
+                await bot.delete_message(msg)
 
         await asyncio.sleep(update_time)
 
 bot.loop.create_task(background_loop())
-
-bot.run(bot_token)
