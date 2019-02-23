@@ -7,7 +7,7 @@ Any offline servers will be displayed with the IP and Status.
 If you receive this error ```Task was destroyed but it is pending!``` it means it was under heavily load.
 
 ### To Do:
-- Create a hosted version of the bot to work across multiple servers.
+- Create a hosted version of the bot to work across multiple servers (almost done).
 - Implment a method for avoiding character limits.
 
 # Preview
