@@ -1,0 +1,10 @@
+{
+    "_PLEASE_READ_THIS_": "If you make any translations or improvements please share them on https://github.com/WardPearce/Timed-Bans-Discord-Bot",
+
+    "en": {
+        "connection-successful": "===========================================\nName: {0.user}\nCommunity: {1}\nDiscord.py version: {2}\nSource query rewrite version: {3}\n===========================================",
+        "wrong-version": "[ERROR] ==> This bot requires the discord.py rewrite, please install the correct version.\n\nYou are using: {}\nPlease install 1.0.1",
+        "server-details-online": "\n\n**Name:** {} \n**Map**: {}\n**Players:** {}/{} \nsteam://connect/{}",
+        "server-details-offline": "\n\n**IP:** {} \n**Status:** Offline"
+    }
+}
