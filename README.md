@@ -30,7 +30,7 @@ category-title must be unique.
             "server-list-channel": 465887902920867841
         },
 ```
-Last category should end with just ``}`` not ``},``.
+Last category should end with just ``}`` not ``},``
 
 ### Hosting
 - Create a VPS running ubuntu 16.04 or above.
