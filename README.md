@@ -1,16 +1,7 @@
 ![DNH Logo](https://camo.githubusercontent.com/742c455547018630cf337754b6e93a16e880dbd2/68747470733a2f2f63646e2e646973636f72646170702e636f6d2f6174746163686d656e74732f3433353630313839363836323930383433372f3533383532363832363139323936313533362f6e626664666864666864686468642e706e67)
 
-# Moving to rewrite soon.
-
 # About
-Utilizing DN.H Source Query API. displays map, player count &amp; ip what refreshes at a set interval. 
-Any offline servers will be displayed with the IP and Status.
-
-If you receive this error ```Task was destroyed but it is pending!``` it means it was under heavily load.
-
-### To Do:
-- Create a hosted version of the bot to work across multiple servers (almost done).
-- Implment a method for avoiding character limits.
+This discord bot what can edit multiple messages for multiple source servers containing game details, e.g. player count, map and server name. This allows you to create separate messages for different gamemodes etc.
 
 # Preview
-![Bot Preview](https://i.gyazo.com/527b7dd13d9dd32f017211ea3d4f4972.png)
+![Bot Preview](https://i.imgur.com/sHLPyeg.png)
