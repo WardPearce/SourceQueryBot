@@ -5,3 +5,45 @@ This discord bot can edit multiple messages for multiple source servers containi
 
 # Preview
 ![Bot Preview](https://i.imgur.com/sHLPyeg.png)
+
+### Configuring
+- Edit config.json
+
+#### General
+```
+language | Bot currently only has translations for english.
+bot-token | Discord Bot token, https://github.com/reactiflux/discord-irc/wiki/Creating-a-discord-bot-&-getting-a-token
+prefix | Command prefix, e.g. !rank & !top.
+community-name | Name of your community.
+update-time | How long in seconds should the stats take to update, 25 or above recommended.
+```
+
+#### Source Query
+Add servers and categories.
+
+``-`` is used to represent spaces.
+category-title must be unique.
+
+```
+        "category-title": {
+            "server-ips": "ip:port-ip:port-ip:port",
+            "server-list-channel": 465887902920867841
+        },
+```
+Last category should end with just ``}`` not ``},``.
+
+### Hosting
+- Create a VPS running ubuntu 16.04 or above.
+- Install python3.6 ``sudo add-apt-repository ppa:jonathonf/python-3.6``
+- Run ``sudo apt-get install python3.6``
+- Install pip3 ``sudo apt-get -y install python3-pip``
+- Install discord.py rewrite ``pip3 install -U git+https://github.com/Rapptz/discord.py@rewrite#egg=discord.py[voice]``
+- Install aiohttp ``pip3 install aiohttp``
+- Install screen ``sudo apt-get install screen``
+
+### Finally
+- Upload bot files into the VPS.
+- Run ``screen -R sourcequery``
+- Then ``python3 source_query_rewrite.py``
+- Press ``ctrl a, d`` to exit the screen.
+- DONE!
