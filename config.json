@@ -4,7 +4,7 @@
         "bot-token": "",
         "prefix": "!",
         "community-name": "DistrictNine.Host",
-        "update-time": 25
+        "update-time": 60
     },
     "source-query": {
         "Retakes": {
