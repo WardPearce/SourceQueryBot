@@ -37,7 +37,7 @@ Last category should end with just ``}`` not ``},``
 - Install python3.6 ``sudo add-apt-repository ppa:jonathonf/python-3.6``
 - Run ``sudo apt-get install python3.6``
 - Install pip3 ``sudo apt-get -y install python3-pip``
-- Install discord.py rewrite ``pip3 install -U git+https://github.com/Rapptz/discord.py@rewrite#egg=discord.py[voice]``
+- Install discord.py rewrite ``python3 -m pip install -U discord.py``
 - Install aiohttp ``pip3 install aiohttp``
 - Install screen ``sudo apt-get install screen``
 
