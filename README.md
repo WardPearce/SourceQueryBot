@@ -3,8 +3,7 @@
 # About
 This discord bot can edit multiple messages for multiple source servers containing game details, e.g. player count, map and server name. This allows you to create separate messages for different gamemodes etc.
 
-# Preview
-![Bot Preview](https://i.imgur.com/sHLPyeg.png)
+# Setup
 
 ### Configuring
 - Edit config.json
@@ -47,3 +46,6 @@ Last category should end with just ``}`` not ``},``
 - Then ``python3 source_query_rewrite.py``
 - Press ``ctrl a, d`` to exit the screen.
 - DONE!
+
+# Preview
+![Bot Preview](https://i.imgur.com/sHLPyeg.png)
