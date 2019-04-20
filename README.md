@@ -43,7 +43,7 @@ Last category should end with just ``}`` not ``},``
 ### Finally
 - Upload bot files into the VPS.
 - Run ``screen -R sourcequery``
-- Then ``python3 source_query_rewrite.py``
+- Then ``python3 server-list.py``
 - Press ``ctrl a, d`` to exit the screen.
 - DONE!
 
