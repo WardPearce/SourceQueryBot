@@ -51,6 +51,8 @@ if discord.version_info.major == 1:
                                 msg = await channel.send(embed=embed)
                                 server_list_messages.update({json_key:msg})
 
+                await asyncio.sleep(0.1)
+
                 session_object.close
 
             await asyncio.sleep(config["general"]["update-time"])
