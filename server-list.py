@@ -26,36 +26,36 @@ if discord.version_info.major == 1:
 
     async def background_task():
         await client.wait_until_ready()
+
         server_list_messages = {}
+        session = aiohttp.ClientSession()
+
         while not client.is_closed():
-            for json_key in config["source-query"]:
-                channel = client.get_channel(config["source-query"][json_key]["server-list-channel"])
-                session_object = aiohttp.ClientSession()
-                async with session_object as session:
-                    async with session.get("http://districtnine.host/api/serverquery/?ip={}".format(config["source-query"][json_key]["server-ips"])) as r:
-                        if r.status == 200:
-                            server = await r.json()
+            for catagory, values in config["source-query"].items():
+                channel = client.get_channel(values["server-list-channel"])
+                
+                async with session.get("http://districtnine.host/api/serverquery/?ip={}".format(values["server-ips"])) as r:
+                    if r.status == 200:
+                        server = await r.json()
 
-                            server_details = ""
-                            for query in server:
-                                if query["error"] == "none":
-                                    server_details += translations[language]["server-details-online"].format(query["name"], query["map"], query["players"], query["maxplayers"], query["ip"])
-                                else:
-                                    server_details += translations[language]["server-details-offline"].format(query["ip"])
-
-                            embed = discord.Embed(title=json_key.replace("-", " "), colour=discord.Colour(0x9a9faa), description=server_details)
-    
-                            if json_key in server_list_messages:
-                                await server_list_messages[json_key].edit(embed=embed)
+                        server_details = ""
+                        for query in server:
+                            if query["error"] == "none":
+                                server_details += translations[language]["server-details-online"].format(query["name"], query["map"], query["players"], query["maxplayers"], query["ip"])
                             else:
-                                msg = await channel.send(embed=embed)
-                                server_list_messages.update({json_key:msg})
-                                
-                session_object.close
+                                server_details += translations[language]["server-details-offline"].format(query["ip"])
 
-                await asyncio.sleep(0.1)
+                        embed = discord.Embed(title=catagory.replace("-", " "), colour=discord.Colour(0x9a9faa), description=server_details)
+
+                        if catagory in server_list_messages:
+                            await server_list_messages[catagory].edit(embed=embed)
+                        else:
+                            msg = await channel.send(embed=embed)
+                            server_list_messages.update({catagory:msg})
 
             await asyncio.sleep(config["general"]["update-time"])
+        else:
+            await session.close()
 
     client.loop.create_task(background_task())
 
