@@ -3,7 +3,6 @@ import os
 
 import asyncio
 import aiohttp
-from aiopickle import aiopickle
 
 import discord
 
