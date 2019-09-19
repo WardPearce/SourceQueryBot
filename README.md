@@ -11,7 +11,6 @@ This discord bot can edit multiple messages for multiple source servers containi
 ```
 language | Bot currently only has translations for english.
 bot-token | Discord Bot token, https://github.com/reactiflux/discord-irc/wiki/Creating-a-discord-bot-&-getting-a-token
-prefix | Command prefix, e.g. !rank & !top.
 community-name | Name of your community.
 update-time | How long in seconds should the stats take to update, 25 or above recommended.
 ```
@@ -19,11 +18,10 @@ update-time | How long in seconds should the stats take to update, 25 or above r
 #### Source Query
 Add servers and categories.
 
-``-`` is used to represent spaces.
 category-title must be unique.
 
 ```
-        "category-title": {
+        "category title": {
             "server-ips": "ip:port-ip:port-ip:port",
             "server-list-channel": 465887902920867841
         },
@@ -41,7 +39,7 @@ Last category should end with just ``}`` not ``},``
 ### Finally
 - Upload bot files into the VPS.
 - Run ``screen -R sourcequery``
-- Then ``python3 server-list.py``
+- Then ``python3 run.py``
 - Press ``ctrl a, d`` to exit the screen.
 - DONE!
 
