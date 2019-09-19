@@ -46,10 +46,16 @@ if discord.version_info.major == 1:
                         embed = discord.Embed(title=category, colour=discord.Colour(0x9a9faa), description=server_message)
 
                         if category in server_messages:
-                            await server_messages[category].edit(embed=embed)
+                            try:
+                                await server_messages[category]["object"].edit(embed=embed)
+                            except:
+                                try:
+                                    await channel.fetch_message(server_messages[category]["id"]).edit(embed=embed)
+                                except:
+                                    server_messages.pop(category, None)
                         else:
                             msg_object = await channel.send(embed=embed)
-                            server_messages[category] = msg_object
+                            server_messages[category] = {"object": msg_object, "id": msg_object.id}
 
                 await asyncio.sleep(1.5)
 
