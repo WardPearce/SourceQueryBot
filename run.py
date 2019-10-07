@@ -26,13 +26,14 @@ if discord.version_info.major == 1:
         await client.wait_until_ready()
 
         server_messages = {}
+        aiohttp_session = aiohttp.ClientSession()
 
         while not client.is_closed():
             for category, values in config["source-query"].items():
 
                 channel = client.get_channel(values["server-list-channel"])
 
-                async with aiohttp.ClientSession() as session:
+                async with aiohttp_session as session:
                     async with session.get("https://districtnine.host/api/serverquery/?ip={}".format(values["server-ips"])) as r:
                         server_details = await r.json()
 
