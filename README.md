@@ -1,3 +1,5 @@
+# Development Status
+Will get onto improving / fixing this once I have some spare time.
 
 # About
 This discord bot can edit multiple messages for multiple source servers containing game details, e.g. player count, map and server name. This allows you to create separate messages for different gamemodes etc.
