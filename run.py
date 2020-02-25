@@ -55,7 +55,7 @@ class SourceQueryBot(discord.Client):
             else:
                 self.config_error("Unable to pull [{}], no channel, servers or players given.".format(name))
 
-        while not self.is_closed():
+        while True:
             for name, values in config_cache.items():
                 embed = discord.Embed(title="__**{}**__".format(name), colour=discord.Colour(CONFIG["bot"]["embed_color"]))
 
@@ -81,7 +81,7 @@ class SourceQueryBot(discord.Client):
                         try:
                             await values["msg"].edit(embed=embed)
                         except:
-                            self.config_error("Couldn't edit {}".format(values["msg"].id))
+                            self.config_error("Couldn't edit {}".format(values["msg"]))
                     else:
                         try:
                             config_cache[name]["msg"] = await values["channel"].send(embed=embed)
@@ -89,7 +89,7 @@ class SourceQueryBot(discord.Client):
                             if writer_close == False:
                                 await message_id_save.write("{}:{}\n".format(values["channel"].id, config_cache[name]["msg"].id))
                         except:
-                            self.config_error("Couldn't message {}".format(values["channel"].id))
+                            self.config_error("Couldn't message {}".format(values["channel"]))
 
             if writer_close == False:
                 writer_close = True
