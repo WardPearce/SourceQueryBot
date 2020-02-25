@@ -64,12 +64,12 @@ class SourceQueryBot(discord.Client):
 
                     server_info = await server.get_info()
 
-                    if CONFIG["servers"][name]["servers"][ip_port] == False:
-                        server_name = server_info["hostname"][:CONFIG["servers"][name]["char_limit"]]
-                    else:
-                        server_name = CONFIG["servers"][name]["servers"][ip_port]
-
                     if server_info != False:
+                        if CONFIG["servers"][name]["servers"][ip_port] == False:
+                            server_name = server_info["hostname"][:CONFIG["servers"][name]["char_limit"]]
+                        else:
+                            server_name = CONFIG["servers"][name]["servers"][ip_port]
+
                         embed.add_field(name=server_name, value="**Map:** {}\n**Players:** {}/{}\n**Connect:**\nsteam://connect/{}".format(
                             server_info["map"], 
                             server_info["players"],
