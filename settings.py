@@ -10,7 +10,7 @@ CONFIG = {
 
     "message_ids": "{}/message_ids.txt".format(CURRECT_DIR),
 
-    "refresh_rate": 10,
+    "refresh_rate": 60,
 
     "servers": {
         "Retakes": {

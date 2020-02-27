@@ -10,7 +10,7 @@ class SourceQueryBot(discord.Client):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        self.bg_task = self.loop.create_task(self.query_task())
+        self.loop.create_task(self.query_task())
 
     def config_error(self, message):
         print("[WARNING]: {}".format(message))
@@ -55,7 +55,7 @@ class SourceQueryBot(discord.Client):
             else:
                 self.config_error("Unable to pull [{}], no channel, servers or players given.".format(name))
 
-        while True:
+        while not client.is_closed():
             for name, values in config_cache.items():
                 embed = discord.Embed(title="__**{}**__".format(name), colour=discord.Colour(CONFIG["bot"]["embed_color"]))
 
@@ -90,6 +90,8 @@ class SourceQueryBot(discord.Client):
                                 await message_id_save.write("{}:{}\n".format(values["channel"].id, config_cache[name]["msg"].id))
                         except:
                             self.config_error("Couldn't message {}".format(values["channel"]))
+
+                    await asyncio.sleep(1)
 
             if writer_close == False:
                 writer_close = True
