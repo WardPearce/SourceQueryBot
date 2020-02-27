@@ -77,21 +77,21 @@ class SourceQueryBot(discord.Client):
                             ip_port
                         ), inline=False)
 
-                    if values.get("msg"):
-                        try:
-                            await values["msg"].edit(embed=embed)
-                        except:
-                            self.config_error("Couldn't edit {}".format(values["msg"]))
-                    else:
-                        try:
-                            config_cache[name]["msg"] = await values["channel"].send(embed=embed)
-                            
-                            if writer_close == False:
-                                await message_id_save.write("{}:{}\n".format(values["channel"].id, config_cache[name]["msg"].id))
-                        except:
-                            self.config_error("Couldn't message {}".format(values["channel"]))
+                if values.get("msg"):
+                    try:
+                        await values["msg"].edit(embed=embed)
+                    except:
+                        self.config_error("Couldn't edit {}".format(values["msg"]))
+                else:
+                    try:
+                        config_cache[name]["msg"] = await values["channel"].send(embed=embed)
+                        
+                        if writer_close == False:
+                            await message_id_save.write("{}:{}\n".format(values["channel"].id, config_cache[name]["msg"].id))
+                    except:
+                        self.config_error("Couldn't message {}".format(values["channel"]))
 
-                    await asyncio.sleep(1)
+                await asyncio.sleep(1)
 
             if writer_close == False:
                 writer_close = True
