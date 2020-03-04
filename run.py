@@ -1,4 +1,5 @@
 import discord
+from discord.ext import tasks
 import aiofiles
 import asyncio
 import os
@@ -10,7 +11,7 @@ class SourceQueryBot(discord.Client):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        self.loop.create_task(self.query_task())
+        self.query_task.start()
 
     def config_error(self, message):
         print("[WARNING]: {}".format(message))
@@ -18,6 +19,10 @@ class SourceQueryBot(discord.Client):
     async def on_ready(self):
         print('Logged on as {0}!'.format(self.user))
 
+    async def close(self):
+        self.query_task.cancel()
+
+    @tasks.loop(seconds=CONFIG["refresh_rate"])
     async def query_task(self):
         await self.wait_until_ready()
 
@@ -90,8 +95,6 @@ class SourceQueryBot(discord.Client):
                             await message_id_save.write("{}:{}\n".format(values["channel"].id, config_cache[name]["msg"].id))
                     except:
                         self.config_error("Couldn't message {}".format(values["channel"]))
-
-                await asyncio.sleep(1)
 
             if writer_close == False:
                 writer_close = True
