@@ -44,20 +44,32 @@ class SourceQueryBot(discord.Client):
                         server_info["max_players"],
                         ip_port
                     ), inline=False)
+                else:
+                    if CONFIG["servers"][name]["servers"][ip_port] == False:
+                        server_name = "Unknown Server"
+                    else:
+                        server_name = CONFIG["servers"][name]["servers"][ip_port]
+
+                    embed.add_field(name=server_name, value="Unable to pull anything.", inline=False)
+
+                await asyncio.sleep(0.5)
 
             if values.get("msg"):
                 try:
                     await values["msg"].edit(embed=embed)
-                except:
-                    self.config_error("Couldn't edit {}".format(values["msg"]))
+                except Exception as error:
+                    self.config_error("Couldn't edit {}\n\nError\n{}".format(values["msg"], error))
             else:
                 try:
                     self.config_cache[name]["msg"] = await values["channel"].send(embed=embed)
                     
                     if self.writer_close == False:
                         await self.message_id_save.write("{}:{}\n".format(values["channel"].id, self.config_cache[name]["msg"].id))
-                except:
-                    self.config_error("Couldn't message {}".format(values["channel"]))
+
+                except Exception as error:
+                    self.config_error("Couldn't message {}\n\nError\n{}".format(values["channel"], error))
+
+            await asyncio.sleep(0.5)
 
         if self.writer_close == False:
             self.writer_close = True
@@ -84,11 +96,11 @@ class SourceQueryBot(discord.Client):
         self.config_cache = {}
         for name, values in CONFIG["servers"].items():
             if values.get("channel") and values.get("servers"):
-                channel = self.get_channel(values["channel"])
+                channel_obj = self.get_channel(values["channel"])
 
-                if channel != None:
+                if channel_obj != None:
                     self.config_cache[name] = {
-                        "channel": channel,
+                        "channel": channel_obj,
                         "servers": [],
                     }
 
