@@ -34,7 +34,6 @@ class SourceQueryBot(discord.Client):
     async def smart_presence(self, players, max_players, map, loop_index):
         if loop_index == self.sever_amount:
             self.presence_completed = False
-            print("presence_completed false")
 
         sleep = loop_index * 10
 
