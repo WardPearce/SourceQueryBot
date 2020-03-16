@@ -42,10 +42,6 @@ class SourceQueryBot(discord.Client):
             if self.loop_index >= 131068:
                 self.loop_index = 0
 
-            print("Sleep: ", sleep)
-            print("Server amnount: ", self.server_amount)
-            print("Loop Index: ", self.loop_index)
-
             await asyncio.sleep(sleep)
 
         await self.change_presence(status=discord.Status.online, activity=discord.Game(TRANSLATIONS["smart_presence"].format(
