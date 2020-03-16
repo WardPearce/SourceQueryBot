@@ -12,7 +12,10 @@ CONFIG = {
 
     "refresh_rate": 30,
     
-    "smart_presence": True,
+    "smart_presence": {
+        "enable": True,
+        "name": False, # If false will use current map.
+    },
 
     "message_ids": "{}/message_ids.txt".format(CURRECT_DIR),
 

@@ -31,7 +31,7 @@ class SourceQueryBot(discord.Client):
     async def close(self):
         self.query_task.cancel()
 
-    async def smart_presence(self, players, max_players, map, loop_index):
+    async def smart_presence(self, players, max_players, title, loop_index):
         if loop_index == self.sever_amount:
             self.presence_completed = False
 
@@ -42,7 +42,7 @@ class SourceQueryBot(discord.Client):
         await self.change_presence(status=discord.Status.online, activity=discord.Game(TRANSLATIONS["smart_presence"].format(
             players,
             max_players,
-            map
+            title
         )))
 
         if loop_index == self.sever_amount:
@@ -78,10 +78,15 @@ class SourceQueryBot(discord.Client):
                         ip_port
                     ), inline=False)
 
-                    if CONFIG["smart_presence"]:
+                    if CONFIG["smart_presence"]["enable"]:
                         if self.presence_completed:
+                            if CONFIG["smart_presence"]["name"]:
+                                title = server_name
+                            else:
+                                title = server_info["map"]
+
                             asyncio.create_task(self.smart_presence(players=server_info["players"], max_players=server_info["max_players"],
-                                                                    map=server_info["map"], loop_index=loop_index))
+                                                                    title=title, loop_index=loop_index))
                     else:
                         total_players += server_info["players"]
                         total_max_players += server_info["max_players"]
@@ -112,7 +117,7 @@ class SourceQueryBot(discord.Client):
 
             await asyncio.sleep(0.5)
 
-        if CONFIG["smart_presence"] == False:
+        if CONFIG["smart_presence"]["enable"] == False:
             await self.change_presence(status=discord.Status.online, activity=discord.Game(TRANSLATIONS["total_players"].format(total_players, total_max_players)))
 
         if self.writer_close == False:
