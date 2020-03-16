@@ -8,6 +8,8 @@ CONFIG = {
         "embed_color": 0xaeb8da,
     },
 
+    "lang": "en",
+
     "message_ids": "{}/message_ids.txt".format(CURRECT_DIR),
 
     "refresh_rate": 30,

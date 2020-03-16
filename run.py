@@ -5,7 +5,13 @@ import asyncio
 import os
 
 from settings import CONFIG
+from translations import TRANSLATIONS
 from aioquery import aioquery
+
+if CONFIG["lang"] not in TRANSLATIONS:
+    raise Exception("Translation doesn't exist")
+
+TRANSLATIONS = TRANSLATIONS[CONFIG["lang"]]
 
 class SourceQueryBot(discord.Client):
     def __init__(self, *args, **kwargs):
@@ -25,7 +31,7 @@ class SourceQueryBot(discord.Client):
     @tasks.loop(seconds=CONFIG["refresh_rate"])
     async def query_task(self):
         for name, values in self.config_cache.items():
-            embed = discord.Embed(title="__**{}**__".format(name), colour=discord.Colour(CONFIG["bot"]["embed_color"]))
+            embed = discord.Embed(title=TRANSLATIONS["title"].format(name), colour=discord.Colour(CONFIG["bot"]["embed_color"]))
 
             for server in values["servers"]:
                 ip_port = "{}:{}".format(server.ip, server.port)
@@ -38,7 +44,7 @@ class SourceQueryBot(discord.Client):
                     else:
                         server_name = CONFIG["servers"][name]["servers"][ip_port]
 
-                    embed.add_field(name=server_name, value="**Map:** {}\n**Players:** {}/{}\n**Connect:**\nsteam://connect/{}".format(
+                    embed.add_field(name=server_name, value=TRANSLATIONS["successful"].format(
                         server_info["map"], 
                         server_info["players"],
                         server_info["max_players"],
@@ -46,11 +52,11 @@ class SourceQueryBot(discord.Client):
                     ), inline=False)
                 else:
                     if CONFIG["servers"][name]["servers"][ip_port] == False:
-                        server_name = "Unknown Server"
+                        server_name = TRANSLATIONS["fail_title"]
                     else:
                         server_name = CONFIG["servers"][name]["servers"][ip_port]
 
-                    embed.add_field(name=server_name, value="Unable to pull anything.", inline=False)
+                    embed.add_field(name=server_name, value=TRANSLATIONS["fail"], inline=False)
 
                 await asyncio.sleep(0.5)
 
