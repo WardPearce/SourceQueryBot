@@ -14,8 +14,8 @@ if CONFIG["lang"] not in TRANSLATIONS:
 TRANSLATIONS = TRANSLATIONS[CONFIG["lang"]]
 
 class SourceQueryBot(discord.Client):
-    loop_index = 0
-    server_amount = 0
+    sever_amount = -1
+    presence_completed = True
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -31,18 +31,14 @@ class SourceQueryBot(discord.Client):
     async def close(self):
         self.query_task.cancel()
 
-    async def smart_presence(self, players, max_players, map, current_loop_index):
-        if current_loop_index != 1:
-            if self.loop_index > self.server_amount:
-                sleep = (10 * current_loop_index) - CONFIG["refresh_rate"]
-            else:
-                sleep = 10 * current_loop_index
+    async def smart_presence(self, players, max_players, map, loop_index):
+        if loop_index == self.sever_amount:
+            self.presence_completed = False
+            print("presence_completed false")
 
-            # Reseting the loop_index counter to save memory
-            if self.loop_index >= 131068:
-                self.loop_index = 0
+        sleep = loop_index * 10
 
-            await asyncio.sleep(sleep)
+        await asyncio.sleep(sleep)
 
         await self.change_presence(status=discord.Status.online, activity=discord.Game(TRANSLATIONS["smart_presence"].format(
             players,
@@ -50,16 +46,21 @@ class SourceQueryBot(discord.Client):
             map
         )))
 
+        if loop_index == self.sever_amount:
+            self.presence_completed = True
+
     @tasks.loop(seconds=CONFIG["refresh_rate"])
     async def query_task(self):
         total_players = 0
         total_max_players = 0
 
+        loop_index = -1
+
         for name, values in self.config_cache.items():
             embed = discord.Embed(title=TRANSLATIONS["title"].format(name), colour=discord.Colour(CONFIG["bot"]["embed_color"]))
 
             for server in values["servers"]:
-                self.loop_index += 1
+                loop_index += 1
 
                 ip_port = "{}:{}".format(server.ip, server.port)
 
@@ -79,8 +80,9 @@ class SourceQueryBot(discord.Client):
                     ), inline=False)
 
                     if CONFIG["smart_presence"]:
-                        asyncio.create_task(self.smart_presence(players=server_info["players"], max_players=server_info["max_players"],
-                                                                map=server_info["map"], current_loop_index=self.loop_index))
+                        if self.presence_completed:
+                            asyncio.create_task(self.smart_presence(players=server_info["players"], max_players=server_info["max_players"],
+                                                                    map=server_info["map"], loop_index=loop_index))
                     else:
                         total_players += server_info["players"]
                         total_max_players += server_info["max_players"]
@@ -148,7 +150,7 @@ class SourceQueryBot(discord.Client):
                     }
 
                     for server in values["servers"].keys():
-                        self.server_amount += 1
+                        self.sever_amount += 1
 
                         ip_port = server.split(":")
                         self.config_cache[name]["servers"].append(aioquery(ip_port[0], int(ip_port[1])))
