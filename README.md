@@ -11,4 +11,15 @@ This discord bot can edit multiple messages for multiple source servers containi
 - Run ``python3 run.py``
 
 ## Preview
+#### Server List
 ![Preview](http://i.imgur.com/Ph9iZgR.png)
+
+#### Smart Presence
+Updates the bot's presence every 10 seconds to a different server.
+
+![Smart Presence](https://i.imgur.com/Hb5LNaq.png)
+
+#### Normal Presence
+Displays total server stats.
+
+![Normal Presence](https://i.imgur.com/WYsuujT.png)

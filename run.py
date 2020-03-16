@@ -14,6 +14,9 @@ if CONFIG["lang"] not in TRANSLATIONS:
 TRANSLATIONS = TRANSLATIONS[CONFIG["lang"]]
 
 class SourceQueryBot(discord.Client):
+    loop_index = 0
+    server_amount = 0
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
@@ -28,12 +31,40 @@ class SourceQueryBot(discord.Client):
     async def close(self):
         self.query_task.cancel()
 
+    async def smart_presence(self, players, max_players, map, current_loop_index):
+        if current_loop_index != 1:
+            if self.loop_index > self.server_amount:
+                sleep = (10 * current_loop_index) - CONFIG["refresh_rate"]
+            else:
+                sleep = 10 * current_loop_index
+
+            # Reseting the loop_index counter to save memory
+            if self.loop_index >= 131068:
+                self.loop_index = 0
+
+            print("Sleep: ", sleep)
+            print("Server amnount: ", self.server_amount)
+            print("Loop Index: ", self.loop_index)
+
+            await asyncio.sleep(sleep)
+
+        await self.change_presence(status=discord.Status.online, activity=discord.Game(TRANSLATIONS["smart_presence"].format(
+            players,
+            max_players,
+            map
+        )))
+
     @tasks.loop(seconds=CONFIG["refresh_rate"])
     async def query_task(self):
+        total_players = 0
+        total_max_players = 0
+
         for name, values in self.config_cache.items():
             embed = discord.Embed(title=TRANSLATIONS["title"].format(name), colour=discord.Colour(CONFIG["bot"]["embed_color"]))
 
             for server in values["servers"]:
+                self.loop_index += 1
+
                 ip_port = "{}:{}".format(server.ip, server.port)
 
                 server_info = await server.get_info()
@@ -50,6 +81,13 @@ class SourceQueryBot(discord.Client):
                         server_info["max_players"],
                         ip_port
                     ), inline=False)
+
+                    if CONFIG["smart_presence"]:
+                        asyncio.create_task(self.smart_presence(players=server_info["players"], max_players=server_info["max_players"],
+                                                                map=server_info["map"], current_loop_index=self.loop_index))
+                    else:
+                        total_players += server_info["players"]
+                        total_max_players += server_info["max_players"]
                 else:
                     if CONFIG["servers"][name]["servers"][ip_port] == False:
                         server_name = TRANSLATIONS["fail_title"]
@@ -76,6 +114,9 @@ class SourceQueryBot(discord.Client):
                     self.config_error("Couldn't message {}\n\nError\n{}".format(values["channel"], error))
 
             await asyncio.sleep(0.5)
+
+        if CONFIG["smart_presence"] == False:
+            await self.change_presence(status=discord.Status.online, activity=discord.Game(TRANSLATIONS["total_players"].format(total_players, total_max_players)))
 
         if self.writer_close == False:
             self.writer_close = True
@@ -111,8 +152,9 @@ class SourceQueryBot(discord.Client):
                     }
 
                     for server in values["servers"].keys():
-                        ip_port = server.split(":")
+                        self.server_amount += 1
 
+                        ip_port = server.split(":")
                         self.config_cache[name]["servers"].append(aioquery(ip_port[0], int(ip_port[1])))
                 else:
                     self.config_error("Unable to pull channel with ID {}.".format(values["channel"]))

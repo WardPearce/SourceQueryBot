@@ -10,9 +10,11 @@ CONFIG = {
 
     "lang": "en",
 
-    "message_ids": "{}/message_ids.txt".format(CURRECT_DIR),
-
     "refresh_rate": 30,
+    
+    "smart_presence": True,
+
+    "message_ids": "{}/message_ids.txt".format(CURRECT_DIR),
 
     "servers": {
         "Retakes": {
