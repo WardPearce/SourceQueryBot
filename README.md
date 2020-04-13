@@ -4,11 +4,10 @@ This discord bot can edit multiple messages for multiple source servers containi
 #### Status: Stable
 
 ## Setup
-- Install ``pip3 install git+https://github.com/WardPearce/aioquery.git``
-- Install ``pip3 install aiofiles``
-- Install [Discord.py](https://discordpy.readthedocs.io/en/rewrite/intro.html#installing)
+- ``pip install -r /path/to/requirements.txt``
 - Edit ``settings.py``
-- Run ``python3 run.py``
+- Install ``screen`` or ``pm2`` to run the bot in the background.
+- Then run ``python3 run.py``
 
 ## Preview
 #### Server List
