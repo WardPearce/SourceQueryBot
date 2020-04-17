@@ -1,8 +1,6 @@
 import discord
 from discord.ext import tasks
 
-import asyncio
-
 from settings import CONFIG
 from translations import TRANSLATIONS
 
