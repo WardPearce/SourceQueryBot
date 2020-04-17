@@ -36,7 +36,10 @@ class SourceQuery(discord.Client, Misc):
 
     @tasks.loop(seconds=CONFIG["refresh_rate"])
     async def query_task(self):
-        await self.server.format_message()
+        try:
+            await self.server.format_message()
+        except Exception as error:
+            self.config_error(error)
 
     @query_task.before_loop
     async def before_query_task(self):
