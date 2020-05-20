@@ -8,6 +8,7 @@ from utils.config import Config
 from utils.server import Server
 from utils.misc import Misc
 
+
 class SourceQuery(discord.Client, Misc):
     sever_amount = -1
     config_cache = {}
@@ -30,6 +31,7 @@ class SourceQuery(discord.Client, Misc):
         print("Logged on as {0}!".format(self.user))
 
     async def close(self):
+        print("Please wait I'm closing.")
         self.query_task.cancel()
 
     @tasks.loop(seconds=CONFIG["refresh_rate"])

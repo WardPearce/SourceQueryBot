@@ -11,10 +11,10 @@ CONFIG = {
     "lang": "en",
 
     "refresh_rate": 30,
-    
+
     "smart_presence": {
         "enable": True,
-        "name": False, # If false will use current map.
+        "name": False,  # If false will use current map.
     },
 
     "message_ids": "{}/message_ids.txt".format(CURRECT_DIR),
@@ -22,7 +22,7 @@ CONFIG = {
     "servers": {
         "Retakes": {
             "char_limit": 25,
-            "channel": 653839007829983252,
+            "channel": 705852327550124062,
             "servers": {
                 "216.52.148.47:27015": "#1 | WS | KNIFE",
                 "87.98.228.196:27040": "#2 | WS | KNIFE",
@@ -30,7 +30,7 @@ CONFIG = {
         },
         "Bhop": {
             "char_limit": 25,
-            "channel": 653839007829983252,
+            "channel": 705852327550124062,
             "servers": {
                 "92.119.148.31:27015": False,
                 "92.119.148.18:27015": False,
