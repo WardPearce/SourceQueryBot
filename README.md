@@ -1,3 +1,5 @@
+#### Rewrite with new features is planned!
+
 #### Requires 3.7 or higher!
 
 # About
