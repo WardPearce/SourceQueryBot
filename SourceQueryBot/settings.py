@@ -1,3 +1,6 @@
+import aioquery
+
+
 class Server:
     def __init__(self, ip: str, port: int = 27015,
                  alt_name: str = None) -> None:
@@ -18,10 +21,13 @@ class Server:
         self.port = port
         self.alt_name = alt_name
 
+        self.interact = aioquery.client(ip, port)
+
 
 class Category:
-    def __init__(self, name: str, channel: int,
-                 servers: list, server_name_limit: int = 20) -> None:
+    def __init__(self, name: str, channel: int, color: hex,
+                 servers: list, server_name_limit: int = 20,
+                 inline: bool = False) -> None:
         """
         Handles server commands.
 
@@ -33,11 +39,17 @@ class Category:
             Limits how many characters the server name can be.
         channel: int
             Discord channel ID for this category.
+        color: hex
+            Hex color code.
         servers: list
             List of Server objects.
+        inline: bool
+            Defaults to false, if servers should be inline.
         """
 
         self.name = name
         self.server_name_limit = server_name_limit
         self.channel = channel
         self.servers = servers
+        self.color = color
+        self.inline = inline

@@ -1,16 +1,16 @@
 import aiofiles
 import typing
 
-from os import path
+from os import path, getcwd
 
 from .exceptions import NoSuchConfigFile
 
 
 class Messages:
+    _saved_messages = []
+
     def __init__(self,
-                 location: str = path.join(
-                     path.dirname(path.realpath(__file__)),
-                     "messages.txt")) -> None:
+                 location: str = path.join(getcwd(), "messages.txt")) -> None:
 
         self.location = location
 
@@ -34,12 +34,11 @@ class Messages:
         """
 
         if path.exists(self.location):
-            async with aiofiles.open(self.location) as file:
-                data = await file.read()
+            async with aiofiles.open(self.location, "r+") as file:
+                async for line in file:
+                    yield line
 
                 await file.truncate(0)
-
-                return data.split("\n")
         else:
             raise NoSuchConfigFile()
 
@@ -53,5 +52,8 @@ class Messages:
             line to save.
         """
 
-        async with aiofiles.open(self.location, mode="a") as file:
-            await file.write(str(line))
+        if line not in self._saved_messages:
+            self._saved_messages.append(line)
+
+            async with aiofiles.open(self.location, mode="a") as file:
+                await file.write("{}\n".format(line))
