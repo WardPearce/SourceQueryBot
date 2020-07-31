@@ -13,18 +13,17 @@ from .messages import Messages
 from .cached_messaging import CachedMessaging
 
 
-__version__ = "0.0.1"
+__version__ = "1.0.0"
 
 
 logging.basicConfig(level=logging.INFO)
 
 
 class SourceQueryBot(discord.Client):
-    _refresh_rate = 0.0
     _presence_completed = True
     _total_servers = 0
 
-    def __init__(self, catagories: list, refresh_rate: float = 30.0,
+    def __init__(self, catagories: list,
                  lanague: TranslationBase = English,
                  messages: Messages = Messages(),
                  smart_presence: bool = False,
@@ -34,8 +33,6 @@ class SourceQueryBot(discord.Client):
 
         Paramters
         ---------
-        refresh_rate: int
-            How many seconds to refresh, defaults to 30.
         lanague: TranslationBase
             Defaults to english.
         messages: Messages
@@ -47,7 +44,6 @@ class SourceQueryBot(discord.Client):
         super().__init__(*args, **kwargs)
 
         self.lanague = lanague
-        self._refresh_rate = refresh_rate
         self.catagories = catagories
         self.messages = messages
 
