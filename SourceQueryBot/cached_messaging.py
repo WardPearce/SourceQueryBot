@@ -20,7 +20,7 @@ class CachedMessaging:
             await CACHED_CATAGORIES[self.catgory].edit(**self.kwargs)
         else:
             if self.channel:
-                message = await self.channel.send(**self.kwargs)
+                message = await self.channel.send(*self.args, **self.kwargs)
 
                 CACHED_CATAGORIES[self.catgory] = message
             else:
