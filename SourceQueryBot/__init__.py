@@ -13,7 +13,7 @@ from .messages import Messages
 from .cached_messaging import CachedMessaging
 
 
-__version__ = "1.0.0"
+__version__ = "1.0.1"
 
 
 logging.basicConfig(level=logging.INFO)
@@ -107,7 +107,13 @@ class SourceQueryBot(discord.Client):
             for server in catgory.servers:
                 try:
                     info = await server.interact.info()
-
+                except (InvalidServer, DidNotReceive, UnableToConnect):
+                    embed.add_field(
+                        name=server.alt_name if server.alt_name else
+                        self.lanague.offline_title,
+                        value=self.lanague.offline_msg
+                    )
+                else:
                     embed.add_field(
                         name=server.alt_name if server.alt_name else
                         info.hostname[:catgory.server_name_limit] + "...",
@@ -134,13 +140,6 @@ class SourceQueryBot(discord.Client):
                                 loop_index
                             )
                         )
-
-                except (InvalidServer, DidNotReceive, UnableToConnect):
-                    embed.add_field(
-                        name=server.alt_name if server.alt_name else
-                        self.lanague.offline_title,
-                        value=self.lanague.offline_msg
-                    )
 
                 await asyncio.sleep(0.0001)
 

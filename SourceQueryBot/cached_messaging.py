@@ -17,7 +17,7 @@ class CachedMessaging:
 
     async def send_edit(self) -> channel:
         if self.catgory in CACHED_CATAGORIES:
-            message = await CACHED_CATAGORIES[self.catgory].edit(**self.kwargs)
+            await CACHED_CATAGORIES[self.catgory].edit(**self.kwargs)
         else:
             if self.channel:
                 message = await self.channel.send(**self.kwargs)
