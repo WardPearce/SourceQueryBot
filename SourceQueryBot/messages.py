@@ -14,14 +14,14 @@ class Messages:
 
         self.location = location
 
-    async def get(self) -> list:
+    async def get(self) -> typing.AsyncGenerator[typing.Any, None]:
         """
         Gets discord message IDs.
 
-        Returns
-        -------
-        list
-            List of discord message IDs.
+        Yields
+        ------
+        str
+            Line from file.
 
         Raises
         ------
