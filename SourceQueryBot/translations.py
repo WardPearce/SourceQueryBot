@@ -20,8 +20,9 @@ class English(TranslationBase):
     smart_presence = "{}/{} on {}"
     invalid_py_version = "Python 3.7 or above is required for" + \
         " smart presence, you're running {}"
-        
-class Russian:
+
+
+class Russian(TranslationBase):
     shutdown = "Бот завершает работу, НЕ нажимайте ctrl + C"
     on_ready = "Вы вошли как {}"
     server = """**Карта:** {}\n**Игроков:** {}/{}
