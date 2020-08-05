@@ -13,7 +13,7 @@ from .messages import Messages
 from .cached_messaging import CachedMessaging
 
 
-__version__ = "1.0.1"
+__version__ = "1.0.2"
 
 
 logging.basicConfig(level=logging.INFO)
@@ -24,16 +24,18 @@ class SourceQueryBot(discord.Client):
     _total_servers = 0
 
     def __init__(self, catagories: list,
-                 lanague: TranslationBase = English,
+                 language: TranslationBase = English,
                  messages: Messages = Messages(),
                  smart_presence: bool = False,
                  *args, **kwargs) -> None:
         """
-        Pass any discord bot client args / paramters.
+        Pass any discord bot client args / parameters.
 
-        Paramters
-        ---------
-        lanague: TranslationBase
+        Parameters
+        ----------
+        catagories: list
+            List of category objects.
+        language: TranslationBase
             Defaults to english.
         messages: Messages
             Handles message caching.
@@ -43,7 +45,7 @@ class SourceQueryBot(discord.Client):
 
         super().__init__(*args, **kwargs)
 
-        self.lanague = lanague
+        self.language = language
         self.catagories = catagories
         self.messages = messages
 
@@ -51,7 +53,7 @@ class SourceQueryBot(discord.Client):
             self.smart_presence = False
             logging.log(
                 logging.INFO,
-                lanague.invalid_py_version.format(
+                language.invalid_py_version.format(
                     sys.version
                 )
             )
@@ -61,10 +63,10 @@ class SourceQueryBot(discord.Client):
         self.query_task.start()
 
     async def on_ready(self) -> None:
-        print(self.lanague.on_ready.format(self.user))
+        print(self.language.on_ready.format(self.user))
 
     async def close(self) -> None:
-        print(self.lanague.shutdown)
+        print(self.language.shutdown)
 
         await super().close()
         self.query_task.cancel()
@@ -80,7 +82,7 @@ class SourceQueryBot(discord.Client):
         await self.change_presence(
             status=Status.online,
             activity=Game(
-                self.lanague.smart_presence.format(
+                self.language.smart_presence.format(
                     players,
                     max_players,
                     map_name
@@ -110,14 +112,14 @@ class SourceQueryBot(discord.Client):
                 except (InvalidServer, DidNotReceive, UnableToConnect):
                     embed.add_field(
                         name=server.alt_name if server.alt_name else
-                        self.lanague.offline_title,
-                        value=self.lanague.offline_msg
+                        self.language.offline_title,
+                        value=self.language.offline_msg
                     )
                 else:
                     embed.add_field(
                         name=server.alt_name if server.alt_name else
                         info.hostname[:catgory.server_name_limit] + "...",
-                        value=self.lanague.server.format(
+                        value=self.language.server.format(
                             info.map,
                             info.players,
                             info.max_players,
@@ -157,7 +159,7 @@ class SourceQueryBot(discord.Client):
             await self.change_presence(
                 status=Status.online,
                 activity=Game(
-                    self.lanague.normal_presence.format(
+                    self.language.normal_presence.format(
                         total_players,
                         total_max_players
                     )
@@ -180,9 +182,16 @@ class SourceQueryBot(discord.Client):
             else:
                 channel = self.get_channel(int(channel_id))
                 if channel:
-                    message_obj = await channel.fetch_message(int(message_id))
-                    if message_obj:
-                        await message_obj.delete()
+                    try:
+                        message_obj = await asyncio.wait_for(
+                            channel.fetch_message(int(message_id)),
+                            3
+                        )
+                    except Exception:
+                        pass
+                    else:
+                        if message_obj:
+                            await message_obj.delete()
 
         for catgory in self.catagories:
             for server in catgory.servers:

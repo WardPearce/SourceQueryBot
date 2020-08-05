@@ -7,8 +7,8 @@ class Server:
         """
         Handles server settings.
 
-        Paramters
-        ---------
+        Parameters
+        ----------
         ip: str
             IP address of server.
         port: int
@@ -31,8 +31,8 @@ class Category:
         """
         Handles server commands.
 
-        Paramters
-        ---------
+        Parameters
+        ----------
         name: str
             Name of category
         server_name_limit: int
