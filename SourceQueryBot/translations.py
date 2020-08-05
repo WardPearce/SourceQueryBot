@@ -20,3 +20,15 @@ class English(TranslationBase):
     smart_presence = "{}/{} on {}"
     invalid_py_version = "Python 3.7 or above is required for" + \
         " smart presence, you're running {}"
+        
+class Russian:
+    shutdown = "Бот завершает работу, НЕ нажимайте ctrl + C"
+    on_ready = "Вы вошли как {}"
+    server = """**Карта:** {}\n**Игроков:** {}/{}
+**Присоединиться:**\nsteam://connect/{}"""
+    offline_title = "Неизвестно"
+    offline_msg = "**Этот сервер офлайн.**"
+    normal_presence = "{}/{} на наших серверах."
+    smart_presence = "{}/{} на {}"
+    invalid_py_version = "Python 3.7 или выше требуется для" + \
+        " smart presence, у вас запущен {}"
