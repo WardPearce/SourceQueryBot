@@ -23,6 +23,7 @@ This discord bot can edit multiple messages for multiple source servers containi
 ## Languages
 - English (Default) - ``SourceQueryBot.translations.English``
 - Russian - ``SourceQueryBot.translations.Russian``
+- Chinese - ``SourceQueryBot.translations.Chinese``
 
 ## API
 - ``from SourceQueryBot import SourceQueryBot``
