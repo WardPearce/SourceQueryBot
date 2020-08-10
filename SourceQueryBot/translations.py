@@ -33,3 +33,16 @@ class Russian(TranslationBase):
     smart_presence = "{}/{} на {}"
     invalid_py_version = "Python 3.7 или выше требуется для" + \
         " smart presence, у вас запущен {}"
+
+
+class Chinese(TranslationBase):
+    shutdown = "机器人正在关闭，请不要按 ctrl + C"
+    on_ready = "登录为 {}"
+    server = """**地图名:** {}\n**玩家:** {}/{}
+**连接:**\nsteam://connect/{}"""
+    offline_title = "未知"
+    offline_msg = "**此服务器离线.**"
+    normal_presence = "{}/{} 在我们的服务器上."
+    smart_presence = "{}/{} 在 {}"
+    invalid_py_version = "需要 Python 3.7或更高版本" + \
+        " smart presence, 您正在运行 {}"
