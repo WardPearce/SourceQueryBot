@@ -3,8 +3,6 @@ import typing
 
 from os import path, getcwd
 
-from .exceptions import NoSuchConfigFile
-
 
 class Messages:
     _saved_messages = []
@@ -40,7 +38,8 @@ class Messages:
 
                 await file.truncate(0)
         else:
-            raise NoSuchConfigFile()
+            async with aiofiles.open(self.location, "w+") as file:
+                await file.close()
 
     async def save(self, line: typing.Any) -> None:
         """
