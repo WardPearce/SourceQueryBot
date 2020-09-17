@@ -21,7 +21,7 @@ class Server:
         self.port = port
         self.alt_name = alt_name
 
-        self.interact = aioquery.client(ip, port)
+        self.interact = aioquery.Server(ip, port)
 
 
 class Category:

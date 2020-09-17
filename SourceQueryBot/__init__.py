@@ -13,7 +13,7 @@ from .messages import Messages
 from .cached_messaging import CachedMessaging
 
 
-__version__ = "1.0.4"
+__version__ = "1.0.5"
 
 
 logging.basicConfig(level=logging.INFO)
