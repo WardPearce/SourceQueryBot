@@ -1,3 +1,5 @@
+### Not being maintained until I have more time. I'll be making some massive changes once I have time.
+
 [![GitHub issues](https://img.shields.io/github/issues/WardPearce/SourceQueryBot)](https://github.com/WardPearce/SourceQueryBot/issues)
 [![GitHub license](https://img.shields.io/github/license/WardPearce/SourceQueryBot)](https://github.com/WardPearce/SourceQueryBot/blob/master/LICENSE)
 [![Actions Status](https://github.com/WardPearce/SourceQueryBot/workflows/Python%20application/badge.svg)](https://github.com/WardPearce/SourceQueryBot/actions)
